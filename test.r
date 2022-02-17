@@ -266,3 +266,6 @@ p <- df.counts.long |>
     ggplot(aes(x = rank, y = counts, fill = sujet)) +
     geom_bar(stat="identity") + facet_wrap(~sujet, scales="fixed") #+
     # scale_y_discrete(breaks = waiver(), map_chr(1:12, as.character))
+
+# Print the groups
+groups
