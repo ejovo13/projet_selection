@@ -1,4 +1,5 @@
-lib.loc = "//home/ejovo/R/x86_64-pc-linux-gnu-library/4.1"
+# lib.loc = "//home/ejovo/R/x86_64-pc-linux-gnu-library/4.1"
+lib.loc = "/home/ejovo/.r"
 library(dplyr, lib.loc = lib.loc)
 library(ggplot2, lib.loc = lib.loc)
 library(tidyr, lib.loc = lib.loc)
@@ -13,9 +14,12 @@ MAX_PER_GROUP <- 4
 # data <- as_tibble(read.csv("clean.csv"))
 # data <- as_tibble(read.csv("almost_full.csv"))
 # data <- as_tibble(read.csv("clean2.csv"))
-data <- as_tibble(read.csv("final.csv"))
+# data <- as_tibble(read.csv("final.csv"))
+data <- as_tibble(read.csv("final_evan.csv"))
 
 # Filter each column based on a rank
+# Seed the generator to make the results reproducible
+set.seed(1234)
 
 pivot <- function(df) {
     df |> pivot_longer(c(Homer.vs.Donuts, Je.de.Vie, PageRank, N.Corps, Blockchain, Cables.sous.marin, Liquides.Ferro, Imprimerie.3d),
