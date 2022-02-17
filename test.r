@@ -1,8 +1,9 @@
-library(dplyr, lib.loc = "/home/ejovo/.r")
-library(ggplot2, lib.loc = "/home/ejovo/.r")
-library(tidyr, lib.loc = "/home/ejovo/.r")
-library(purrr, lib.loc = "/home/ejovo/.r")
-# library(tidyverse, lib.loc = "/home/ejovo/.r")
+lib.loc = "//home/ejovo/R/x86_64-pc-linux-gnu-library/4.1"
+library(dplyr, lib.loc = lib.loc)
+library(ggplot2, lib.loc = lib.loc)
+library(tidyr, lib.loc = lib.loc)
+library(purrr, lib.loc = lib.loc)
+# library(tidyverse, lib.loc = lib.loc)
 library(tibble)
 # library(magrittr)
 
@@ -11,7 +12,8 @@ MAX_PER_GROUP <- 4
 # data <- as_tibble(read.csv("cds.csv"))
 # data <- as_tibble(read.csv("clean.csv"))
 # data <- as_tibble(read.csv("almost_full.csv"))
-data <- as_tibble(read.csv("clean2.csv"))
+# data <- as_tibble(read.csv("clean2.csv"))
+data <- as_tibble(read.csv("final.csv"))
 
 # Filter each column based on a rank
 
@@ -115,11 +117,12 @@ df.counts.long <- df.counts.long |>
 # df.counts.long[df.counts.long$counts == 0] <- NA
 
 
+# I should arrange the factors according to their average score
 
 p <- df.counts.long |>
     ggplot(aes(x = rank, y = counts, fill = rank)) +
-    geom_bar(stat="identity") + facet_wrap(~sujet, scales="fixed") +
-    scale_y_discrete(breaks = waiver(), map_chr(1:12, as.character))
+    geom_bar(stat="identity") + facet_wrap(~sujet, scales="fixed") #+
+    # scale_y_discrete(breaks = waiver(), map_chr(1:12, as.character))
 # p <- df.counts.long |> ggplot(aes(x = rank, y = counts, fill = counts)) + geom_boxplot() + facet_wrap(~sujet)
 p
 
