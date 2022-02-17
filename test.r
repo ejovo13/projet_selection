@@ -10,12 +10,12 @@ library(tibble)
 
 MAX_PER_GROUP <- 4
 
-# data <- as_tibble(read.csv("cds.csv"))
-# data <- as_tibble(read.csv("clean.csv"))
-# data <- as_tibble(read.csv("almost_full.csv"))
-# data <- as_tibble(read.csv("clean2.csv"))
-# data <- as_tibble(read.csv("final.csv"))
-data <- as_tibble(read.csv("final_evan.csv"))
+data <- as_tibble(read.csv("final.csv"))
+
+
+
+
+
 
 # Filter each column based on a rank
 # Seed the generator to make the results reproducible
@@ -255,3 +255,14 @@ for (r in 1:8) {
 
     }
 }
+
+# Let's rearrange the order of the items so that I can display from smallest mean to the largest
+
+data.tr <- data |> summarise_each(funs(mean))
+data.tr <- unlist(data.tr[2:9])
+
+df.counts.long <- df.counts.long |> mutate(sujet = factor(sujet, levels = nom_sujets[order(data.tr)]))
+p <- df.counts.long |>
+    ggplot(aes(x = rank, y = counts, fill = sujet)) +
+    geom_bar(stat="identity") + facet_wrap(~sujet, scales="fixed") #+
+    # scale_y_discrete(breaks = waiver(), map_chr(1:12, as.character))
