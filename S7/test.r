@@ -5,6 +5,9 @@ library(purrr)
 library(tibble)
 
 MAX_PER_GROUP <- 4
+
+MAX_PER_GROUP_VECTOR <- c(4, 5, 4, 4, 4, 4)
+
 file <- "voeux.csv"
 data <- as_tibble(read.csv(file))
 PROJECT_NAMES <- c("A_eye", "Capgemini", "Hugging_face", "Snap", "Euris_donnes", "Meteorix")
@@ -27,10 +30,10 @@ data_long
 
 nom_sujets <- unique(data_long$sujet)
 
-place_left <- function(group_members) {
-    l <- length(group_members)
-    return(max(MAX_PER_GROUP - l, 0))
-}
+# place_left <- function(group_members, project_number) {
+#     l <- length(group_members)
+#     return(max(MAX_PER_GROUP_VECTOR[project_number] - l, 0))
+# }
 
 filter_rank <- function(df, n) {
     df |> filter(rank == n)
@@ -210,7 +213,7 @@ for (r in 1:NB_PROJECTS) {
         names <- get_names(unchosen, sub, r)
 
         # Is there enough space for all these chickens?
-        if (count <= places_left_list(groups, sub, MAX_PER_GROUP) && count != 0) {
+        if (count <= places_left_list(groups, sub, MAX_PER_GROUP_VECTOR[sub]) && count != 0) {
 
             for (n in names) {
                groups <- add_to_group(groups, sub, n)
@@ -223,7 +226,7 @@ for (r in 1:NB_PROJECTS) {
         } else if (length(names) != 0) {
             # If there isnt enough space, randomly choose people to add to the group.
             print("Not enough space")
-            while (places_left_list(groups, sub, MAX_PER_GROUP) > 0) {
+            while (places_left_list(groups, sub, MAX_PER_GROUP_VECTOR[sub]) > 0) {
 
 
                 lucky_student_index <- sample(seq_len(length(names)), size = 1)
